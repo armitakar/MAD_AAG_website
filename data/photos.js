@@ -1,0 +1,53 @@
+/**
+ * ============================================================
+ *  MAD-AAG — PHOTOS MANIFEST
+ *
+ *  This file tells the website where to find all photos.
+ *
+ *  HOW TO ADD PHOTOS:
+ *  1. Put the image file in the right folder:
+ *       • Officer photos  → photos/officers/
+ *       • Meeting photos  → photos/meetings/YEAR/
+ *  2. Update the filename below (e.g. "tracy-edwards.jpg")
+ *  3. Save this file and refresh your browser.
+ *
+ *  SUPPORTED FORMATS: .jpg  .jpeg  .png  .webp
+ *  RECOMMENDED SIZE:
+ *     Officer portraits  → 400×400 px (square)
+ *     Meeting photos     → 1200×800 px landscape
+ * ============================================================
+ */
+
+window.PHOTOS = {
+
+  /* ── OFFICER PHOTOS ───────────────────────────────────────
+     Match the "photo" field in data/site.js → officers[].
+     Leave as "" if no photo yet — a placeholder avatar shows.
+  ──────────────────────────────────────────────────────── */
+  officers: {
+    "tracy-edwards.jpg":   "photos/officers/tracy-edwards.jpg",
+    "michael-allen.jpg":   "photos/officers/michael-allen.jpg",
+    "andrea-presotto.jpg": "photos/officers/andrea-presotto.jpg",
+    "jaime-barrett.jpg":   "photos/officers/jaime-barrett.jpg",
+    "jeremy-tasch.jpg":    "photos/officers/jeremy-tasch.jpg"
+  },
+
+  /* ── MEETING PHOTOS ───────────────────────────────────────
+     Organized by year. Each entry matches a photo src in
+     data/meetings.js → MEETINGS[].photos[].src
+  ──────────────────────────────────────────────────────── */
+  meetings: {
+    2026: {
+      /* Add filenames once photos are available */
+      /* "keynote.jpg": "photos/meetings/2026/keynote.jpg" */
+    },
+    2025: {
+      /* "keynote.jpg": "photos/meetings/2025/keynote.jpg",
+         "lunch.jpg":   "photos/meetings/2025/lunch.jpg"   */
+    },
+    2024: {},
+    2023: {},
+    2022: {}
+  }
+
+}; /* END window.PHOTOS */

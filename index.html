@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Middle Atlantic Division – AAG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=Inter+Tight:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN TOKENS — edit colors/fonts here if needed
+   ============================================================ */
+:root {
+  --navy:   #1a2e4a;
+  --teal:   #2a7a6e;
+  --gold:   #c8902c;
+  --sky:    #e8f2f5;
+  --warm:   #f9f6f0;
+  --text:   #1e2530;
+  --muted:  #5a6272;
+  --border: #d4dce8;
+  --white:  #ffffff;
+
+  --ff-display: 'Merriweather', Georgia, serif;
+  --ff-body:    'Inter', system-ui, sans-serif;
+  --ff-label:   'Inter Tight', system-ui, sans-serif;
+
+  --radius: 6px;
+  --shadow: 0 2px 12px rgba(26,46,74,.10);
+  --shadow-md: 0 4px 24px rgba(26,46,74,.14);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--ff-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--white);
+}
+img { max-width: 100%; display: block; }
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ============================================================
+   LAYOUT UTILITIES
+   ============================================================ */
+.container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 72px 0; }
+.section--alt { background: var(--warm); }
+.section--sky { background: var(--sky); }
+.section--navy { background: var(--navy); color: var(--white); }
+
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+@media (max-width: 900px) {
+  .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .section { padding: 48px 0; }
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.eyebrow {
+  font-family: var(--ff-label);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+h1, h2, h3, h4 { font-family: var(--ff-display); line-height: 1.3; }
+h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2.2rem); margin-bottom: 12px; }
+h3 { font-size: 1.25rem; margin-bottom: 8px; }
+h4 { font-size: 1rem; font-family: var(--ff-label); font-weight: 700; }
+p { margin-bottom: 1em; }
+p:last-child { margin-bottom: 0; }
+.lead { font-size: 1.15rem; color: var(--muted); max-width: 680px; }
+.section-head { margin-bottom: 48px; }
+.section-head p { color: var(--muted); }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--navy);
+  border-bottom: 3px solid var(--gold);
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.site-logo {
+  display: flex; align-items: center; gap: 12px; color: var(--white);
+  font-family: var(--ff-display); font-size: .95rem; font-weight: 700;
+  line-height: 1.2;
+}
+.site-logo abbr {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--gold); color: var(--navy);
+  font-family: var(--ff-label); font-size: .85rem; font-weight: 700;
+  text-decoration: none; flex-shrink: 0;
+}
+nav { display: flex; gap: 4px; }
+nav a.nav-link {
+  font-family: var(--ff-label); font-size: .82rem; font-weight: 600;
+  color: rgba(255,255,255,.82); padding: 8px 12px; border-radius: var(--radius);
+  transition: all .2s; white-space: nowrap; letter-spacing: .02em;
+  cursor: pointer;
+}
+nav a.nav-link:hover,
+nav a.nav-link.active {
+  background: rgba(255,255,255,.12);
+  color: var(--white); text-decoration: none;
+}
+nav a.nav-link.active { border-bottom: 2px solid var(--gold); border-radius: 0; }
+
+/* Hamburger */
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: var(--white); margin: 5px 0; transition: .3s; }
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+  nav {
+    display: none; position: absolute; top: 64px; left: 0; right: 0;
+    background: var(--navy); flex-direction: column; padding: 12px 24px 20px; gap: 0;
+    border-bottom: 3px solid var(--gold);
+  }
+  nav.open { display: flex; }
+  nav a.nav-link { padding: 10px 4px; font-size: .9rem; }
+}
+
+/* ============================================================
+   PAGES (single-page app pattern)
+   ============================================================ */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ============================================================
+   HOME — HERO
+   ============================================================ */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #243b5a 55%, #1e4a42 100%);
+  color: var(--white); padding: 96px 0 80px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; right: -200px; width: 600px; height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='rgba(200,144,44,.07)' d='M300,50 L550,200 L550,400 L300,550 L50,400 L50,200Z'/%3E%3Cpath fill='rgba(42,122,110,.12)' d='M300,100 L500,220 L500,380 L300,500 L100,380 L100,220Z'/%3E%3C/svg%3E") center/contain no-repeat;
+  pointer-events: none;
+}
+.hero-content { position: relative; max-width: 700px; }
+.hero .eyebrow { color: var(--gold); }
+.hero h1 { color: var(--white); margin-bottom: 20px; }
+.hero .lead { color: rgba(255,255,255,.82); font-size: 1.2rem; margin-bottom: 36px; max-width: 600px; }
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn {
+  display: inline-block; padding: 12px 28px;
+  border-radius: var(--radius); font-family: var(--ff-label);
+  font-size: .9rem; font-weight: 700; letter-spacing: .03em;
+  cursor: pointer; transition: all .2s; border: 2px solid transparent;
+}
+.btn-primary { background: var(--gold); color: var(--navy); }
+.btn-primary:hover { background: #d9a040; text-decoration: none; }
+.btn-outline { border-color: rgba(255,255,255,.5); color: var(--white); }
+.btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.1); text-decoration: none; }
+.btn-teal { background: var(--teal); color: var(--white); }
+.btn-teal:hover { background: #236658; text-decoration: none; }
+
+/* Quick-facts bar */
+.facts-bar {
+  background: var(--teal); color: var(--white);
+  padding: 20px 0;
+}
+.facts-inner { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 16px; }
+.fact { text-align: center; }
+.fact-number { font-family: var(--ff-display); font-size: 2rem; font-weight: 700; line-height: 1; }
+.fact-label { font-size: .8rem; opacity: .8; margin-top: 2px; font-family: var(--ff-label); text-transform: uppercase; letter-spacing: .07em; }
+
+/* About card on home */
+.about-blurb { max-width: 680px; }
+
+/* News cards */
+.card {
+  background: var(--white); border-radius: var(--radius);
+  border: 1px solid var(--border); padding: 28px;
+  box-shadow: var(--shadow); transition: box-shadow .2s, transform .2s;
+}
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.card-date { font-size: .8rem; color: var(--muted); font-family: var(--ff-label); margin-bottom: 8px; }
+.card h3 { color: var(--navy); margin-bottom: 8px; font-size: 1.1rem; }
+.card p { font-size: .9rem; color: var(--muted); }
+.card .tag {
+  display: inline-block; margin-bottom: 10px;
+  padding: 2px 10px; border-radius: 20px; font-size: .73rem;
+  font-family: var(--ff-label); font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+}
+.tag-meeting { background: #e6f3f0; color: var(--teal); }
+.tag-announce { background: #fdf2e0; color: #a0720f; }
+.tag-newsletter { background: #e8ecf4; color: var(--navy); }
+
+/* ============================================================
+   OFFICERS PAGE
+   ============================================================ */
+.officer-card {
+  background: var(--white); border-radius: var(--radius);
+  border: 1px solid var(--border); overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.officer-card-top { background: var(--navy); height: 6px; }
+.officer-body { padding: 24px 28px; }
+.officer-role {
+  font-family: var(--ff-label); font-size: .78rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em; color: var(--gold);
+  margin-bottom: 6px;
+}
+.officer-name { font-size: 1.15rem; color: var(--navy); font-family: var(--ff-display); margin-bottom: 4px; }
+.officer-inst { font-size: .88rem; color: var(--muted); margin-bottom: 12px; }
+.officer-email a { font-size: .85rem; color: var(--teal); }
+
+/* ============================================================
+   MEMBERSHIP
+   ============================================================ */
+.benefit-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 24px; }
+.benefit-icon {
+  flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--teal); display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.benefit-text h4 { margin-bottom: 4px; color: var(--navy); }
+.benefit-text p { font-size: .9rem; color: var(--muted); margin: 0; }
+
+/* ============================================================
+   MEETINGS
+   ============================================================ */
+.meeting-hero {
+  background: linear-gradient(135deg, #1a2e4a, #2a4a3a);
+  color: var(--white); padding: 60px 0 48px; margin-bottom: 0;
+}
+.meeting-hero h2 { color: var(--white); font-size: clamp(1.6rem, 4vw, 2.4rem); }
+.meeting-hero p { color: rgba(255,255,255,.8); }
+.meeting-meta { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 20px; }
+.meeting-meta-item { display: flex; align-items: center; gap: 8px; font-size: .9rem; color: rgba(255,255,255,.9); }
+.meeting-meta-item .ico { font-size: 1.1rem; }
+
+/* Photo grid */
+.photo-grid { display: grid; gap: 8px; grid-template-columns: repeat(3, 1fr); }
+.photo-grid .photo-tall { grid-row: span 2; }
+.photo-slot {
+  background: var(--sky); border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  min-height: 180px; overflow: hidden; position: relative;
+}
+.photo-slot img { width: 100%; height: 100%; object-fit: cover; }
+.photo-slot .photo-placeholder {
+  text-align: center; color: var(--muted); padding: 24px;
+}
+.photo-slot .photo-placeholder p { font-size: .82rem; margin-top: 4px; }
+.add-photo-btn {
+  position: absolute; bottom: 8px; right: 8px;
+  background: rgba(26,46,74,.7); color: var(--white);
+  border: none; border-radius: 4px; padding: 4px 10px; font-size: .75rem;
+  cursor: pointer; font-family: var(--ff-label);
+}
+.past-meetings-list { list-style: none; }
+.past-meetings-list li {
+  display: flex; align-items: baseline; gap: 16px; padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.past-meetings-list li:last-child { border-bottom: none; }
+.past-year { font-family: var(--ff-label); font-weight: 700; color: var(--gold); min-width: 42px; }
+.past-title { color: var(--navy); font-weight: 500; }
+.past-location { color: var(--muted); font-size: .88rem; }
+
+/* ============================================================
+   ANNOUNCEMENTS
+   ============================================================ */
+.announce-item {
+  border-left: 4px solid var(--gold); padding: 20px 24px;
+  background: var(--white); border-radius: 0 var(--radius) var(--radius) 0;
+  box-shadow: var(--shadow); margin-bottom: 20px;
+}
+.announce-item h3 { color: var(--navy); margin-bottom: 6px; }
+.announce-item .meta { font-size: .8rem; color: var(--muted); margin-bottom: 10px; }
+.announce-item.urgent { border-left-color: #c0392b; }
+.announce-item.info   { border-left-color: var(--teal); }
+
+/* ============================================================
+   NEWSLETTER
+   ============================================================ */
+.newsletter-card {
+  background: var(--white); border-radius: var(--radius);
+  border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow);
+  transition: box-shadow .2s, transform .2s;
+}
+.newsletter-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.newsletter-cover {
+  background: linear-gradient(135deg, var(--navy), var(--teal));
+  padding: 32px 24px; text-align: center; color: var(--white);
+}
+.newsletter-cover .vol { font-family: var(--ff-label); font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; opacity: .8; }
+.newsletter-cover .issue-title { font-family: var(--ff-display); font-size: 1.1rem; margin: 6px 0 0; }
+.newsletter-body { padding: 20px 24px; }
+.newsletter-body p { font-size: .88rem; color: var(--muted); margin-bottom: 16px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: #111820; color: rgba(255,255,255,.65);
+  padding: 48px 0 28px;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 36px; }
+@media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr; } }
+.footer-brand p { font-size: .88rem; line-height: 1.6; margin-top: 10px; }
+footer h4 { color: var(--white); font-family: var(--ff-label); font-size: .85rem; text-transform: uppercase; letter-spacing: .09em; margin-bottom: 14px; }
+footer ul { list-style: none; }
+footer ul li { margin-bottom: 8px; }
+footer ul a { color: rgba(255,255,255,.6); font-size: .88rem; transition: color .2s; }
+footer ul a:hover { color: var(--gold); text-decoration: none; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 20px; font-size: .8rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.footer-bottom a { color: var(--gold); }
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+.divider { height: 3px; width: 48px; background: var(--gold); margin: 12px 0 24px; }
+
+/* ============================================================
+   EDIT NOTICE
+   ============================================================ */
+.edit-notice {
+  background: #fffbe6; border: 1px solid #f0d060; border-radius: var(--radius);
+  padding: 14px 20px; font-size: .85rem; color: #7a6020; margin-bottom: 28px;
+}
+.edit-notice strong { display: block; margin-bottom: 4px; }
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     ✏️  EASY EDIT SECTION — Update your site content here
+     All dynamic data lives in the <script> block below.
+     Find the "SITE_DATA" object and update fields freely.
+     ============================================================ -->
+
+<!-- HEADER -->
+<header>
+  <div class="container header-inner">
+    <div class="site-logo">
+      <abbr title="Middle Atlantic Division">MAD</abbr>
+      <span>Middle Atlantic Division<br><small style="font-weight:400;font-size:.78rem;opacity:.7">American Association of Geographers</small></span>
+    </div>
+    <button class="nav-toggle" onclick="document.querySelector('nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="main-nav">
+      <a class="nav-link" onclick="showPage('home')">Home</a>
+      <a class="nav-link" onclick="showPage('officers')">Officers</a>
+      <a class="nav-link" onclick="showPage('membership')">Membership</a>
+      <a class="nav-link" onclick="showPage('meetings')">Meetings</a>
+      <a class="nav-link" onclick="showPage('announcements')">Announcements</a>
+      <a class="nav-link" onclick="showPage('newsletter')">Newsletter</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================  PAGE: HOME  ============================================================ -->
+<div id="page-home" class="page">
+
+  <section class="hero">
+    <div class="container hero-content">
+      <p class="eyebrow">AAG Regional Division</p>
+      <h1 id="home-headline">Middle Atlantic Division</h1>
+      <p class="lead" id="home-subline">Connecting geographers across Maryland, Northern Virginia, and Washington, DC — advancing geographic research, education, and community.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" onclick="showPage('meetings')">Annual Meeting →</a>
+        <a class="btn btn-outline" href="https://www.aag.org/membership/" target="_blank">Join AAG</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="facts-bar">
+    <div class="container facts-inner" id="facts-bar"></div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="align-items:start;gap:56px;">
+        <div>
+          <p class="eyebrow">About MAD</p>
+          <h2>Geography is what we all have in common</h2>
+          <div class="divider"></div>
+          <p id="about-text"></p>
+          <p style="margin-top:16px;"><a class="btn btn-teal" href="https://www.aag.org/regional-division/middle-atlantic-division/" target="_blank">Visit AAG Profile</a></p>
+        </div>
+        <div>
+          <p class="eyebrow">Latest News</p>
+          <h2>Updates & Highlights</h2>
+          <div class="divider"></div>
+          <div id="home-news"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sky">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Upcoming</p>
+        <h2>Next Annual Meeting</h2>
+        <div class="divider"></div>
+      </div>
+      <div id="home-next-meeting"></div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============================================================  PAGE: OFFICERS  ============================================================ -->
+<div id="page-officers" class="page">
+  <section style="padding:60px 0 20px;background:var(--warm);">
+    <div class="container">
+      <p class="eyebrow">Leadership</p>
+      <h1>Division Officers</h1>
+      <div class="divider"></div>
+      <p class="lead">The MAD Executive Committee is elected by members and serves the geographic community across the region.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="grid-3" id="officers-grid"></div>
+      <div style="margin-top:48px;padding:28px;background:var(--sky);border-radius:var(--radius);">
+        <h3>Contact the Division</h3>
+        <p style="margin:8px 0 16px;color:var(--muted);">For general inquiries, reach the full leadership team at the division list address.</p>
+        <a class="btn btn-teal" href="mailto:MADRD@communities.aag.org">Email Division Leadership</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================  PAGE: MEMBERSHIP  ============================================================ -->
+<div id="page-membership" class="page">
+  <section style="padding:60px 0 20px;background:var(--warm);">
+    <div class="container">
+      <p class="eyebrow">Join Us</p>
+      <h1>Membership</h1>
+      <div class="divider"></div>
+      <p class="lead" id="membership-intro"></p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="align-items:start;gap:56px;">
+        <div>
+          <h2>Member Benefits</h2>
+          <div class="divider"></div>
+          <div id="membership-benefits"></div>
+        </div>
+        <div>
+          <h2>How to Join</h2>
+          <div class="divider"></div>
+          <div id="membership-how"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================  PAGE: MEETINGS  ============================================================ -->
+<div id="page-meetings" class="page">
+
+  <div class="meeting-hero">
+    <div class="container">
+      <p class="eyebrow">Annual Meeting</p>
+      <h2 id="meeting-title-hero"></h2>
+      <p id="meeting-tagline"></p>
+      <div class="meeting-meta" id="meeting-meta"></div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="gap:48px;align-items:start;">
+        <div>
+          <p class="eyebrow">About the Meeting</p>
+          <h2>Details &amp; Information</h2>
+          <div class="divider"></div>
+          <div id="meeting-details"></div>
+        </div>
+        <div>
+          <p class="eyebrow">Schedule</p>
+          <h2>Program at a Glance</h2>
+          <div class="divider"></div>
+          <div id="meeting-schedule"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <p class="eyebrow">Memories</p>
+      <h2>Meeting Photos</h2>
+      <div class="divider"></div>
+      <p style="color:var(--muted);margin-bottom:28px;" id="photo-instructions">Add your meeting photos below. Replace the placeholder slots by editing the <code>SITE_DATA.photos</code> array in the script.</p>
+      <div class="photo-grid" id="photo-grid"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">History</p>
+      <h2>Past Annual Meetings</h2>
+      <div class="divider"></div>
+      <ul class="past-meetings-list" id="past-meetings-list"></ul>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============================================================  PAGE: ANNOUNCEMENTS  ============================================================ -->
+<div id="page-announcements" class="page">
+  <section style="padding:60px 0 20px;background:var(--warm);">
+    <div class="container">
+      <p class="eyebrow">News &amp; Updates</p>
+      <h1>Announcements</h1>
+      <div class="divider"></div>
+      <p class="lead">Stay up to date with division news, calls for papers, awards, and opportunities.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div style="max-width:760px;" id="announcements-list"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================  PAGE: NEWSLETTER  ============================================================ -->
+<div id="page-newsletter" class="page">
+  <section style="padding:60px 0 20px;background:var(--warm);">
+    <div class="container">
+      <p class="eyebrow">Publications</p>
+      <h1>Newsletter</h1>
+      <div class="divider"></div>
+      <p class="lead" id="newsletter-intro"></p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="grid-3" id="newsletter-grid"></div>
+      <div style="margin-top:48px;padding:28px;background:var(--sky);border-radius:var(--radius);">
+        <h3>Submit Content</h3>
+        <p style="color:var(--muted);margin:8px 0 16px;" id="newsletter-submit-text"></p>
+        <a class="btn btn-teal" href="mailto:MADRD@communities.aag.org" id="newsletter-submit-btn">Submit to Newsletter</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="font-family:var(--ff-display);font-size:1.1rem;color:var(--white);">Middle Atlantic Division</div>
+        <p>American Association of Geographers<br>Serving Maryland, Northern Virginia &amp; Washington, DC</p>
+        <p style="margin-top:12px;"><a href="https://www.aag.org/regional-division/middle-atlantic-division/" target="_blank" style="color:var(--gold);">aag.org/regional-division/middle-atlantic-division</a></p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('officers')">Officers</a></li>
+          <li><a onclick="showPage('meetings')">Meetings</a></li>
+          <li><a onclick="showPage('newsletter')">Newsletter</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>AAG</h4>
+        <ul>
+          <li><a href="https://www.aag.org" target="_blank">AAG Website</a></li>
+          <li><a href="https://www.aag.org/membership/" target="_blank">Join AAG</a></li>
+          <li><a href="https://www.aag.org/community/#regional-divisions" target="_blank">All Divisions</a></li>
+          <li><a href="https://community.aag.org/communities/community-home?communitykey=2d830a49-06ea-468e-9f44-6bda5210aca8" target="_blank">Community Hub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="footer-year"></span> Middle Atlantic Division, AAG. All rights reserved.</span>
+      <a href="mailto:MADRD@communities.aag.org">Contact Us</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+  🛠️  SITE DATA — EDIT EVERYTHING HERE
+  This is the single place to update all content on the site.
+  No HTML knowledge needed — just edit the values in quotes.
+  ============================================================ -->
+<script>
+const SITE_DATA = {
+
+  /* ── HOME ─────────────────────────────────────────────── */
+  about: `The Middle Atlantic Division (MAD) of the American Association of
+    Geographers represents geographers and geography departments in Maryland,
+    Northern Virginia, and Washington, DC. All AAG members who reside in this
+    region are automatically members of this division. We host an annual
+    meeting, publish a newsletter, and foster connections across the regional
+    geographic community.`,
+
+  facts: [
+    { number: "3",  label: "States & DC" },
+    { number: "20+", label: "Member Institutions" },
+    { number: "1",  label: "Annual Meeting" },
+    { number: "~1951", label: "Founded" }
+  ],
+
+  /* Recent news cards shown on home page */
+  recentNews: [
+    {
+      tag: "meeting",
+      date: "November 21, 2025",
+      title: "MAD 2025 — From Appalachia to the Atlantic",
+      text: "Our annual meeting was held successfully. See the Meetings page for photos and highlights."
+    },
+    {
+      tag: "announce",
+      date: "October 2025",
+      title: "Call for nominations: 2026 officers",
+      text: "Nominations are open for Vice-Chair and Secretary positions. Contact any officer to nominate."
+    },
+    {
+      tag: "newsletter",
+      date: "Fall 2025",
+      title: "Fall 2025 Newsletter published",
+      text: "The latest issue covers meeting highlights, member news, and upcoming opportunities."
+    }
+  ],
+
+  /* ── OFFICERS ─────────────────────────────────────────── */
+  officers: [
+    {
+      role: "Chair",
+      name: "Tracy Edwards",
+      institution: "Frostburg State University",
+      location: "Frostburg, MD",
+      email: "MADRD@communities.aag.org"
+    },
+    {
+      role: "Vice-Chair",
+      name: "Michael Allen",
+      institution: "Towson University",
+      location: "Towson, MD",
+      email: ""
+    },
+    {
+      role: "Treasurer",
+      name: "Andrea Presotto",
+      institution: "Salisbury University",
+      location: "Salisbury, MD",
+      email: ""
+    },
+    {
+      role: "Secretary",
+      name: "Jaime Barrett",
+      institution: "University of Maryland, Baltimore County",
+      location: "Catonsville, MD",
+      email: ""
+    },
+    {
+      role: "Regional Councilor",
+      name: "Jeremy Tasch",
+      institution: "Towson University",
+      location: "Towson, MD",
+      email: ""
+    }
+  ],
+
+  /* ── MEMBERSHIP ───────────────────────────────────────── */
+  membershipIntro: `All AAG members who live or work in Maryland, Northern Virginia, or
+    Washington, DC are automatically part of the Middle Atlantic Division —
+    no additional dues required. If you are not yet an AAG member, joining
+    AAG automatically enrolls you in your regional division.`,
+
+  membershipBenefits: [
+    { icon: "🗺️", title: "Annual Meeting",         text: "Attend and present at our regional conference featuring keynotes, panels, field trips, and networking." },
+    { icon: "📰", title: "Division Newsletter",     text: "Receive timely updates on regional events, funding opportunities, and member achievements." },
+    { icon: "🤝", title: "Professional Network",   text: "Connect with geographers at universities, government agencies, and private sector firms across the region." },
+    { icon: "🏆", title: "Awards & Recognition",   text: "Eligible for division awards recognizing outstanding research, teaching, and service." },
+    { icon: "📢", title: "Voice in Governance",    text: "Vote in officer elections and participate in shaping the division's direction." },
+    { icon: "🌐", title: "AAG Community Access",   text: "Full access to the AAG online community hub for the Middle Atlantic Division." }
+  ],
+
+  membershipHow: `
+    <ol style="padding-left:1.4em;line-height:2;color:var(--text)">
+      <li>Visit <a href="https://www.aag.org/membership/" target="_blank">aag.org/membership</a> to join or renew AAG</li>
+      <li>Select the Middle Atlantic Division during registration (or update your regional preference in your profile)</li>
+      <li>You are automatically included in MAD mailing lists and communications</li>
+      <li>Attend the annual meeting — registration details are posted each fall</li>
+    </ol>
+    <p style="margin-top:20px;">
+      <a class="btn btn-primary" href="https://www.aag.org/membership/" target="_blank">Join AAG Now</a>
+    </p>
+  `,
+
+  /* ── MEETINGS ─────────────────────────────────────────── */
+  nextMeeting: {
+    title: "MAD 2026 Annual Meeting",
+    theme: "Geography at the Crossroads: People, Place, and Policy",
+    date: "Fall 2026 — Date TBA",
+    location: "TBA — Mid-Atlantic Region",
+    registration: "#",   /* link to registration form */
+    cfp: "#",            /* link to call for papers */
+    details: `The Middle Atlantic Division Annual Meeting brings together
+      geographers from across Maryland, Northern Virginia, and Washington, DC
+      for a full day of paper sessions, keynote lectures, and collegial
+      exchange. We welcome contributions from all geographic subdisciplines
+      and career stages, including students.`,
+    schedule: [
+      { time: "8:00 AM",  event: "Registration & Coffee" },
+      { time: "9:00 AM",  event: "Opening Remarks & Keynote" },
+      { time: "10:30 AM", event: "Paper Sessions (Round 1)" },
+      { time: "12:00 PM", event: "Lunch & Networking" },
+      { time: "1:30 PM",  event: "Paper Sessions (Round 2)" },
+      { time: "3:00 PM",  event: "Awards Ceremony" },
+      { time: "3:30 PM",  event: "Closing Reception" }
+    ]
+  },
+
+  /* Photos from most recent meeting.
+     To add a real photo: change src to a URL or relative path, e.g. "photos/meeting1.jpg"
+     Set caption to a short description.
+     Set placeholder to false once you add a real image. */
+  photos: [
+    { src: "", caption: "Keynote session",           placeholder: true, tall: true },
+    { src: "", caption: "Morning registration",       placeholder: true, tall: false },
+    { src: "", caption: "Panel discussion",           placeholder: true, tall: false },
+    { src: "", caption: "Poster presentations",       placeholder: true, tall: false },
+    { src: "", caption: "Award ceremony",             placeholder: true, tall: false },
+    { src: "", caption: "Closing reception",          placeholder: true, tall: false }
+  ],
+
+  pastMeetings: [
+    { year: "2025", title: "From Appalachia to the Atlantic",                                      location: "MAD Annual Meeting" },
+    { year: "2024", title: "Geography Matters",                                                    location: "MAD Annual Meeting, Nov 22" },
+    { year: "2023", title: "2023 Middle Atlantic Regional Division Meeting",                       location: "Oct 12–13" },
+    { year: "2022", title: "Re-Imagining the 'Post': Resilience, Recovery, Reinvention",          location: "Oct 21–22" }
+    /* Add more as: { year: "YYYY", title: "Theme", location: "Venue" } */
+  ],
+
+  /* ── ANNOUNCEMENTS ────────────────────────────────────── */
+  announcements: [
+    {
+      type: "info",    /* "info" = teal, "urgent" = red, "" = gold */
+      date: "June 2026",
+      title: "Save the Date: MAD 2026 Annual Meeting",
+      body: "The 2026 Annual Meeting is planned for Fall 2026. Details on location, theme, and call for papers will be announced by late summer. Watch this page for updates."
+    },
+    {
+      type: "",
+      date: "May 2026",
+      title: "Officer Election Results",
+      body: "Congratulations to all newly elected officers. Results were announced to the membership list in May. Thank you to all who participated."
+    },
+    {
+      type: "info",
+      date: "March 2026",
+      title: "Geography Awareness Week — Call for Ideas",
+      body: "Members are encouraged to plan local events celebrating Geography Awareness Week in November 2026. Share your plans with the secretary."
+    },
+    {
+      type: "",
+      date: "January 2026",
+      title: "AAG Annual Meeting — MAD Member Participation",
+      body: "Many MAD members will be presenting at the AAG Annual Meeting. Look for the MAD networking dinner — details forthcoming on the community hub."
+    }
+    /* Add more: { type: "", date: "Month YYYY", title: "Title", body: "Text" } */
+  ],
+
+  /* ── NEWSLETTER ───────────────────────────────────────── */
+  newsletterIntro: `The MAD Newsletter keeps members informed about regional geography
+    news, meeting highlights, job opportunities, member accomplishments,
+    and upcoming events. Issues are distributed via email to all division members.`,
+
+  newsletters: [
+    {
+      volume: "Vol. 2025 · Fall",
+      title: "Meeting Highlights & Member News",
+      summary: "Recap of the MAD 2025 Annual Meeting, photos, award winners, and member updates.",
+      link: "#"   /* replace with URL to PDF or newsletter page */
+    },
+    {
+      volume: "Vol. 2025 · Spring",
+      title: "Call for Papers & Spring Updates",
+      summary: "Preview of the 2025 annual meeting theme, CFP details, and regional job postings.",
+      link: "#"
+    },
+    {
+      volume: "Vol. 2024 · Fall",
+      title: "Geography Matters — Annual Review",
+      summary: "Coverage of the 2024 Annual Meeting, award recipients, and division accomplishments.",
+      link: "#"
+    }
+    /* Add more: { volume: "Vol. YYYY · Season", title: "Title", summary: "Short summary.", link: "#" } */
+  ],
+
+  newsletterSubmit: `Have news to share? Send member accomplishments, job postings, event
+    announcements, or research highlights to the division email list and they
+    may be featured in the next issue.`
+
+}; /* END SITE_DATA */
+
+
+/* ============================================================
+   RENDERING ENGINE — no need to edit below this line
+   ============================================================ */
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(a => {
+    if (a.getAttribute('onclick')?.includes("'" + id + "'")) a.classList.add('active');
+  });
+  document.querySelector('nav').classList.remove('open');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function tag(cls, label) {
+  return `<span class="tag tag-${cls}">${label}</span>`;
+}
+
+function init() {
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+  /* Facts bar */
+  document.getElementById('facts-bar').innerHTML = SITE_DATA.facts.map(f =>
+    `<div class="fact"><div class="fact-number">${f.number}</div><div class="fact-label">${f.label}</div></div>`
+  ).join('');
+
+  /* About */
+  document.getElementById('about-text').textContent = SITE_DATA.about;
+
+  /* Home news */
+  const tagMap = { meeting: 'meeting', announce: 'announce', newsletter: 'newsletter' };
+  const tagLabel = { meeting: 'Meeting', announce: 'Announcement', newsletter: 'Newsletter' };
+  document.getElementById('home-news').innerHTML = SITE_DATA.recentNews.map(n => `
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-date">${n.date}</div>
+      ${tag(tagMap[n.tag] || '', tagLabel[n.tag] || n.tag)}
+      <h3>${n.title}</h3>
+      <p>${n.text}</p>
+    </div>
+  `).join('');
+
+  /* Home next meeting */
+  const nm = SITE_DATA.nextMeeting;
+  document.getElementById('home-next-meeting').innerHTML = `
+    <div class="card" style="max-width:720px;padding:36px;">
+      <p class="eyebrow" style="margin-bottom:4px;">Coming Up</p>
+      <h2 style="margin-bottom:6px;color:var(--navy)">${nm.title}</h2>
+      <p style="font-style:italic;color:var(--teal);font-family:var(--ff-display);margin-bottom:16px;">"${nm.theme}"</p>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:20px;">
+        <span>📅 ${nm.date}</span>
+        <span>📍 ${nm.location}</span>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a class="btn btn-primary" href="${nm.cfp}" onclick="showPage('meetings');return false;">Meeting Details →</a>
+      </div>
+    </div>
+  `;
+
+  /* Officers */
+  document.getElementById('officers-grid').innerHTML = SITE_DATA.officers.map(o => `
+    <div class="officer-card">
+      <div class="officer-card-top"></div>
+      <div class="officer-body">
+        <div class="officer-role">${o.role}</div>
+        <div class="officer-name">${o.name}</div>
+        <div class="officer-inst">${o.institution}<br>${o.location}</div>
+        ${o.email ? `<div class="officer-email"><a href="mailto:${o.email}">${o.email}</a></div>` : ''}
+      </div>
+    </div>
+  `).join('');
+
+  /* Membership */
+  document.getElementById('membership-intro').textContent = SITE_DATA.membershipIntro;
+  document.getElementById('membership-benefits').innerHTML = SITE_DATA.membershipBenefits.map(b => `
+    <div class="benefit-item">
+      <div class="benefit-icon">${b.icon}</div>
+      <div class="benefit-text"><h4>${b.title}</h4><p>${b.text}</p></div>
+    </div>
+  `).join('');
+  document.getElementById('membership-how').innerHTML = SITE_DATA.membershipHow;
+
+  /* Meetings — hero */
+  const m = SITE_DATA.nextMeeting;
+  document.getElementById('meeting-title-hero').textContent = m.title;
+  document.getElementById('meeting-tagline').innerHTML = `<em>"${m.theme}"</em>`;
+  document.getElementById('meeting-meta').innerHTML = `
+    <div class="meeting-meta-item"><span class="ico">📅</span>${m.date}</div>
+    <div class="meeting-meta-item"><span class="ico">📍</span>${m.location}</div>
+    ${m.registration !== '#' ? `<div class="meeting-meta-item"><a href="${m.registration}" style="color:var(--gold);font-weight:700;" target="_blank">Register →</a></div>` : ''}
+    ${m.cfp !== '#' ? `<div class="meeting-meta-item"><a href="${m.cfp}" style="color:var(--gold);font-weight:700;" target="_blank">Submit Abstract →</a></div>` : ''}
+  `;
+
+  document.getElementById('meeting-details').innerHTML = `<p style="color:var(--muted)">${m.details}</p>`;
+
+  document.getElementById('meeting-schedule').innerHTML = `
+    <table style="width:100%;border-collapse:collapse;">
+      ${m.schedule.map((s, i) => `
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:10px 12px 10px 0;font-family:var(--ff-label);font-weight:700;color:var(--teal);font-size:.88rem;white-space:nowrap;vertical-align:top;">${s.time}</td>
+          <td style="padding:10px 0;font-size:.9rem;">${s.event}</td>
+        </tr>`).join('')}
+    </table>
+  `;
+
+  /* Photos */
+  document.getElementById('photo-grid').innerHTML = SITE_DATA.photos.map(p => `
+    <div class="photo-slot${p.tall ? ' photo-tall' : ''}">
+      ${p.placeholder
+        ? `<div class="photo-placeholder"><div style="font-size:2rem;">📷</div><p>${p.caption}</p><p style="font-size:.75rem;margin-top:4px;opacity:.7">Add photo URL in SITE_DATA.photos</p></div>`
+        : `<img src="${p.src}" alt="${p.caption}" loading="lazy">`
+      }
+    </div>
+  `).join('');
+
+  /* Past meetings */
+  document.getElementById('past-meetings-list').innerHTML = SITE_DATA.pastMeetings.map(pm => `
+    <li>
+      <span class="past-year">${pm.year}</span>
+      <div>
+        <div class="past-title">${pm.title}</div>
+        <div class="past-location">${pm.location}</div>
+      </div>
+    </li>
+  `).join('');
+
+  /* Announcements */
+  document.getElementById('announcements-list').innerHTML = SITE_DATA.announcements.map(a => `
+    <div class="announce-item ${a.type}">
+      <div class="meta">Posted ${a.date}</div>
+      <h3>${a.title}</h3>
+      <p style="color:var(--muted);font-size:.9rem;margin:0;">${a.body}</p>
+    </div>
+  `).join('');
+
+  /* Newsletter */
+  document.getElementById('newsletter-intro').textContent = SITE_DATA.newsletterIntro;
+  document.getElementById('newsletter-grid').innerHTML = SITE_DATA.newsletters.map(n => `
+    <div class="newsletter-card">
+      <div class="newsletter-cover">
+        <div class="vol">${n.volume}</div>
+        <div class="issue-title">${n.title}</div>
+      </div>
+      <div class="newsletter-body">
+        <p>${n.summary}</p>
+        <a class="btn btn-teal" href="${n.link}" ${n.link !== '#' ? 'target="_blank"' : ''} style="padding:8px 20px;font-size:.85rem;">
+          ${n.link !== '#' ? 'Read Issue →' : 'Coming Soon'}
+        </a>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('newsletter-submit-text').textContent = SITE_DATA.newsletterSubmit;
+}
+
+/* Hash-based routing */
+function routeFromHash() {
+  const h = (location.hash || '#home').replace('#', '');
+  const valid = ['home','officers','membership','meetings','announcements','newsletter'];
+  showPage(valid.includes(h) ? h : 'home');
+}
+
+document.querySelectorAll('.nav-link').forEach(a => {
+  const orig = a.getAttribute('onclick');
+  a.setAttribute('onclick', orig + "; location.hash = '" +
+    orig.match(/'(\w+)'/)[1] + "'; return false;");
+});
+
+window.addEventListener('hashchange', routeFromHash);
+document.addEventListener('DOMContentLoaded', () => { init(); routeFromHash(); });
+</script>
+</body>
+</html>

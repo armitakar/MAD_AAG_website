@@ -42,6 +42,24 @@ window.SITE = {
   officers: [
     {
       role:        "Chair",
+      name:        "Jeremy Tasch",
+      institution: "Towson University",
+      location:    "Towson, MD",
+      email:       "JTasch@Towson.edu",
+      photo:       "jeremy-tasch.jpg",
+      bio:         "Dr. Tasch represents MAD on the AAG Council and focuses on political geography."
+    },
+    {
+      role:        "Vice-Chair",
+      name:        "Wataru Morioka",
+      institution: "Salisbury University",
+      location:    "Salisbury, MD",
+      email:       "WXMORIOKA@salisbury.edu",
+      photo:       "wataru-morioka.jpg",
+      bio:         "Dr. Morioka's research focuses on space-time analytics and visual communication using GIScience."
+    },
+     {
+      role:        "Treasurer",
       name:        "Tracy Edwards",
       institution: "Frostburg State University",
       location:    "Frostburg, MD",
@@ -50,40 +68,40 @@ window.SITE = {
       bio:         "Dr. Edwards specializes in physical geography and environmental science. She has served MAD in various capacities since 2018."
     },
     {
-      role:        "Vice-Chair",
-      name:        "Michael Allen",
-      institution: "Towson University",
-      location:    "Towson, MD",
-      email:       "",
-      photo:       "michael-allen.jpg",
-      bio:         "Dr. Allen's research focuses on urban geography and GIS applications in the Mid-Atlantic region."
-    },
-    {
-      role:        "Treasurer",
-      name:        "Andrea Presotto",
-      institution: "Salisbury University",
-      location:    "Salisbury, MD",
-      email:       "",
-      photo:       "andrea-presotto.jpg",
-      bio:         "Dr. Presotto specializes in human geography and has managed division finances since 2022."
-    },
-    {
       role:        "Secretary",
-      name:        "Jaime Barrett",
-      institution: "University of Maryland, Baltimore County",
-      location:    "Catonsville, MD",
+      name:        "Armita Kar",
+      institution: "George Mason University",
+      location:    "Fairfax, VA",
       email:       "",
-      photo:       "jaime-barrett.jpg",
-      bio:         "Dr. Barrett's work spans cultural geography and geographic education."
+      photo:       "armita-kar.jpg",
+      bio:         "Dr. Kar's work spans human mobility, spatial cognition, and environmental health."
     },
     {
       role:        "Regional Councilor",
-      name:        "Jeremy Tasch",
-      institution: "Towson University",
-      location:    "Towson, MD",
-      email:       "",
-      photo:       "jeremy-tasch.jpg",
-      bio:         "Dr. Tasch represents MAD on the AAG Council and focuses on political geography."
+      name:        "Louise Kiskowski",
+      institution: "",
+      location:    "",
+      email:       "louiekiskowski@gmail.com",
+      photo:       "louise-kiskowski.jpg",
+      bio:         ""
+    },
+    {
+      role:        "GeoBowl Coordinator",
+      name:        "Christopher Elcik",
+      institution: "Salisbury University",
+      location:    "Salisbury, MD",
+      email:       "cjelcik@salisbury.edu",
+      photo:       "christopher-elcik.jpg",
+      bio:         ""
+    },
+    {
+      role:        "Student Board Representative",
+      name:        "Victor Irekponor",
+      institution: "University of Maryland",
+      location:    "Maryland, MD",
+      email:       "vireks@terpmail.umd.edu",
+      photo:       "victor-irekponor:.jpg",
+      bio:         ""
     }
   ],
 

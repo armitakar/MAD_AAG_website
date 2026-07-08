@@ -29,7 +29,7 @@ window.PHOTOS = {
     "armita-kar.jpg":      "https://science.gmu.edu/sites/default/files/styles/medium_square/public/2024-09/headshot.jpg?h=e5aec6c8&itok=HMAOFcwF",
     "christopher-elcik.jpg": "https://www.salisbury.edu/_images/directory/cjelcik.jpg",
     "victor-irekponor.jpg":   "https://geospatial.umd.edu/sites/geospatial.umd.edu/files/styles/width320/public/smile.jpeg?itok=8LU9ieuU",
-    "Wataru Morioka":      "https://www.salisbury.edu/_images/directory/wxmorioka.jpg"
+    "wataru-morioka.jpg":      "https://www.salisbury.edu/_images/directory/wxmorioka.jpg"
     "jeremy-tasch.jpg":    "https://cdn.theorg.com/ba9bea14-b0ca-4ef2-87e3-a3510f32aa83_medium.jpg"
   },
 

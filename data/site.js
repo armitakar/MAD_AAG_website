@@ -87,6 +87,48 @@ window.SITE = {
     }
   ],
 
+  /* ── PAST OFFICERS ───────────────────────────────────────
+     Add one entry per term. Most recent terms at the TOP.
+     photo and bio are optional — use "" to leave them blank.
+     terms: the year range the person served in that role.
+  ──────────────────────────────────────────────────────── */
+  pastOfficers: [
+    {
+      term: "2023–2025",
+      officers: [
+        { role: "Chair",             name: "John P. Harrington",   institution: "Towson University",              location: "Towson, MD",       photo: "", bio: "" },
+        { role: "Vice-Chair",        name: "Tracy Edwards",         institution: "Frostburg State University",     location: "Frostburg, MD",    photo: "", bio: "" },
+        { role: "Treasurer",         name: "Andrea Presotto",       institution: "Salisbury University",           location: "Salisbury, MD",    photo: "", bio: "" },
+        { role: "Secretary",         name: "Jaime Barrett",         institution: "Univ. of Maryland, BC",          location: "Catonsville, MD",  photo: "", bio: "" },
+        { role: "Regional Councilor",name: "Jeremy Tasch",          institution: "Towson University",              location: "Towson, MD",       photo: "", bio: "" }
+      ]
+    },
+    {
+      term: "2021–2023",
+      officers: [
+        { role: "Chair",             name: "John P. Harrington",   institution: "Towson University",              location: "Towson, MD",       photo: "", bio: "" },
+        { role: "Vice-Chair",        name: "Tracy Edwards",         institution: "Frostburg State University",     location: "Frostburg, MD",    photo: "", bio: "" },
+        { role: "Treasurer",         name: "Andrea Presotto",       institution: "Salisbury University",           location: "Salisbury, MD",    photo: "", bio: "" },
+        { role: "Secretary",         name: "Jaime Barrett",         institution: "Univ. of Maryland, BC",          location: "Catonsville, MD",  photo: "", bio: "" },
+        { role: "Regional Councilor",name: "Jeremy Tasch",          institution: "Towson University",              location: "Towson, MD",       photo: "", bio: "" }
+      ]
+    }
+    /* ── ADD MORE TERMS ABOVE THIS LINE ──
+       Copy this block as a template:
+
+    {
+      term: "YYYY–YYYY",
+      officers: [
+        { role: "Chair",             name: "Full Name", institution: "University", location: "City, ST", photo: "", bio: "" },
+        { role: "Vice-Chair",        name: "Full Name", institution: "University", location: "City, ST", photo: "", bio: "" },
+        { role: "Treasurer",         name: "Full Name", institution: "University", location: "City, ST", photo: "", bio: "" },
+        { role: "Secretary",         name: "Full Name", institution: "University", location: "City, ST", photo: "", bio: "" },
+        { role: "Regional Councilor",name: "Full Name", institution: "University", location: "City, ST", photo: "", bio: "" }
+      ]
+    },
+    ── */
+  ],
+
   /* ── MEMBERSHIP ───────────────────────────────────────────*/
   membershipIntro: `All AAG members who live or work in Maryland, Northern Virginia,
     or Washington, DC are automatically part of the Middle Atlantic Division —
@@ -106,30 +148,62 @@ window.SITE = {
      type options: "info" (teal), "urgent" (red), "" (gold)
      Add newest items at the TOP of the list.
   ──────────────────────────────────────────────────────── */
+  /*
+   * ANNOUNCEMENTS
+   * ─────────────────────────────────────────────────────────
+   * type:      "info" (teal), "urgent" (red), "" (gold)
+   * date:      Display date, e.g. "June 2026"
+   * title:     Short headline shown in the collapsed card
+   * body:      Full text shown when the card is expanded.
+   *            Cards with body longer than ~130 characters get a
+   *            "click to expand" chevron automatically.
+   * link:      (optional) URL for a button inside the expanded post
+   * linkLabel: (optional) Button label, defaults to "Learn More"
+   *
+   * Add newest items at the TOP of the list.
+   */
   announcements: [
     {
       type:  "info",
       date:  "June 2026",
       title: "Save the Date: MAD 2026 Annual Meeting",
-      body:  "The 2026 Annual Meeting is planned for Fall 2026. Details on location, theme, and call for papers will be announced by late summer. Watch this page for updates."
+      body:  `The 2026 Annual Meeting is planned for Fall 2026. We are currently finalizing the host institution and theme.
+              Details on location, registration, and the call for papers will be announced by late summer.
+              All AAG members in the Mid-Atlantic region are welcome to attend and submit abstracts.
+              Watch this page for updates, or join the AAG Community Hub for real-time notifications.`,
+      link:      "",
+      linkLabel: "View Meeting Page"
     },
     {
       type:  "",
       date:  "May 2026",
       title: "Officer Election Results",
-      body:  "Congratulations to all newly elected officers. Results were announced to the membership list in May. Thank you to all who participated."
+      body:  `The 2026 MAD officer elections have concluded. Congratulations to all newly elected officers —
+              results were announced to the full membership list in May.
+              Newly elected officers will begin their terms at the close of the 2026 Annual Meeting.
+              Thank you to all candidates and members who participated in the democratic process that keeps our division strong.`
     },
     {
       type:  "info",
       date:  "March 2026",
       title: "Geography Awareness Week — Call for Ideas",
-      body:  "Members are encouraged to plan local events celebrating Geography Awareness Week in November 2026. Share your plans with the secretary."
+      body:  `Geography Awareness Week takes place each November. Members are encouraged to plan local events —
+              public lectures, map exhibitions, K-12 school visits, or social media campaigns — to celebrate
+              and promote the discipline in their communities.
+              If you are organizing an event, please share your plans with the Secretary so we can help publicize them
+              through the division newsletter and social channels.`
     },
     {
       type:  "",
       date:  "January 2026",
       title: "AAG Annual Meeting — MAD Member Participation",
-      body:  "Many MAD members will be presenting at the AAG Annual Meeting. Look for the MAD networking dinner — details forthcoming on the community hub."
+      body:  `Many MAD members will be presenting research at the AAG Annual Meeting this spring.
+              Look out for the MAD informal networking dinner — we gather each year to connect with
+              regional colleagues in person during the conference.
+              Details on the dinner location and RSVP will be posted to the AAG Community Hub approximately
+              three weeks before the meeting. Check the hub or contact any officer for information.`,
+      link:      "https://community.aag.org/communities/community-home?communitykey=2d830a49-06ea-468e-9f44-6bda5210aca8",
+      linkLabel: "Visit Community Hub"
     }
     /* ── ADD NEW ANNOUNCEMENTS ABOVE THIS LINE ── */
   ],

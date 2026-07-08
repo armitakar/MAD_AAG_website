@@ -29,7 +29,7 @@ window.PHOTOS = {
     "michael-allen.jpg":   "photos/officers/michael-allen.jpg",
     "andrea-presotto.jpg": "photos/officers/andrea-presotto.jpg",
     "jaime-barrett.jpg":   "photos/officers/jaime-barrett.jpg",
-    "jeremy-tasch.jpg":    "photos/officers/jeremy-tasch.jpg"
+    "jeremy-tasch.jpg":    "https://cdn.theorg.com/ba9bea14-b0ca-4ef2-87e3-a3510f32aa83_medium.jpg"
   },
 
   /* ── MEETING PHOTOS ───────────────────────────────────────

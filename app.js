@@ -76,17 +76,24 @@ function renderHome() {
   // About
   document.getElementById('home-about').textContent = S.about;
 
-  // Latest news (from announcements)
+  // Latest news (from announcements) — clickable, opens full post on Announcements page
   const news = (S.announcements || []).slice(0, 3);
-  document.getElementById('home-news').innerHTML = news.map(n => {
-    const tagClass = n.type === 'info' ? 'meeting' : 'announce';
-    return `<div class="card" style="margin-bottom:14px;">
+  document.getElementById('home-news').innerHTML = news.map((n, i) => {
+    const tagClass = n.type === 'info' ? 'meeting' : (n.type === 'meeting' ? 'meeting' : 'announce');
+    const tagLabel = n.type === 'info' ? 'Update' : (n.type === 'meeting' ? 'Meeting' : 'Announcement');
+    return `
+    <div class="card home-news-card" style="margin-bottom:14px;cursor:pointer;"
+         onclick="goToAnnouncement(${i})"
+         role="button" tabindex="0"
+         onkeydown="if(event.key==='Enter'||event.key===' '){goToAnnouncement(${i})}">
       <div class="card-date">${n.date}</div>
-      <span class="tag tag-${tagClass}">${n.type === 'info' ? 'Update' : 'Announcement'}</span>
+      <span class="tag tag-${tagClass}">${tagLabel}</span>
       <h3 style="color:var(--navy);font-size:1rem;margin-bottom:6px;">${n.title}</h3>
-      <p style="font-size:.88rem;color:var(--muted);margin:0;">${n.body.slice(0, 120)}${n.body.length > 120 ? '…' : ''}</p>
+      <p style="font-size:.88rem;color:var(--muted);margin:0 0 10px;">${n.body.slice(0, 120)}${n.body.length > 120 ? '…' : ''}</p>
+      <span style="font-size:.8rem;font-family:var(--ff-label);font-weight:700;color:var(--teal);">Read more →</span>
     </div>`;
   }).join('');
+
 
   // Next meeting teaser
   document.getElementById('home-next-meeting').innerHTML = `
@@ -315,6 +322,20 @@ function toggleArchive() {
   body.hidden   = isOpen;
   chevron.classList.toggle('rotated', !isOpen);
   btn.setAttribute('aria-expanded', String(!isOpen));
+}
+
+/* Navigate to Announcements page and open the nth post */
+function goToAnnouncement(index) {
+  showPage('announcements');
+  // Wait one tick for the page to render, then expand the card
+  setTimeout(() => {
+    const uid  = `cur-${index}`;
+    const body = document.getElementById(`announce-body-${uid}`);
+    if (body && body.hidden) toggleAnnounceById(uid);
+    // Scroll the card into view smoothly
+    const card = document.getElementById(`announce-${uid}`);
+    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 50);
 }
 
 function buildAnnounceHTML(items, idPrefix) {

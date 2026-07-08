@@ -103,9 +103,8 @@ function renderHome() {
 }
 
 /* ── RENDER: OFFICERS ───────────────────────────────────── */
-function renderOfficers() {
-  const officers = window.SITE.officers || [];
-  document.getElementById('officers-grid').innerHTML = officers.map(o => `
+function officerCardHTML(o) {
+  return `
     <div class="officer-card">
       ${officerPhotoHTML(o)}
       <div class="officer-top-bar"></div>
@@ -116,7 +115,50 @@ function renderOfficers() {
         ${o.bio ? `<p class="officer-bio">${o.bio}</p>` : ''}
         ${o.email ? `<div class="officer-email"><a href="mailto:${o.email}">${o.email}</a></div>` : ''}
       </div>
+    </div>`;
+}
+
+function renderOfficers() {
+  const S = window.SITE;
+
+  // Current officers grid
+  document.getElementById('officers-grid').innerHTML =
+    (S.officers || []).map(officerCardHTML).join('');
+
+  // Past officers — build term selector + panels
+  const past = S.pastOfficers || [];
+  const pastSection = document.getElementById('past-officers-section');
+  if (!past.length) { pastSection.style.display = 'none'; return; }
+
+  // Term selector tabs
+  document.getElementById('past-term-tabs').innerHTML = past.map((t, i) => `
+    <button class="term-tab${i === 0 ? ' active' : ''}"
+            onclick="selectTerm(${i})" id="term-tab-${i}">
+      ${t.term}
+    </button>`).join('');
+
+  // Term panels
+  document.getElementById('past-term-panels').innerHTML = past.map((t, i) => `
+    <div class="term-panel${i === 0 ? ' active' : ''}" id="term-panel-${i}">
+      <div class="grid-3">
+        ${t.officers.map(officerCardHTML).join('')}
+      </div>
     </div>`).join('');
+}
+
+function selectTerm(i) {
+  document.querySelectorAll('.term-tab').forEach((el, j) => el.classList.toggle('active', i === j));
+  document.querySelectorAll('.term-panel').forEach((el, j) => el.classList.toggle('active', i === j));
+}
+
+function togglePastOfficers() {
+  const body    = document.getElementById('past-officers-body');
+  const chevron = document.getElementById('past-officers-chevron');
+  const btn     = document.getElementById('past-officers-toggle');
+  const isOpen  = !body.hidden;
+  body.hidden   = isOpen;
+  chevron.classList.toggle('rotated', !isOpen);
+  btn.setAttribute('aria-expanded', String(!isOpen));
 }
 
 /* ── RENDER: MEMBERSHIP ─────────────────────────────────── */
@@ -232,12 +274,56 @@ function renderMeetingDetail(year) {
 /* ── RENDER: ANNOUNCEMENTS ──────────────────────────────── */
 function renderAnnouncements() {
   const items = window.SITE.announcements || [];
-  document.getElementById('announcements-list').innerHTML = items.map(a => `
-    <div class="announce-item ${a.type || ''}">
-      <div class="meta">Posted ${a.date}</div>
-      <h3>${a.title}</h3>
-      <p>${a.body}</p>
-    </div>`).join('');
+  const PREVIEW_LENGTH = 130; // characters shown before "Read more"
+
+  document.getElementById('announcements-list').innerHTML = items.map((a, i) => {
+    const isLong    = a.body.length > PREVIEW_LENGTH;
+    const preview   = isLong ? a.body.slice(0, PREVIEW_LENGTH).trimEnd() + '…' : a.body;
+    const typeLabel = { info: 'Update', urgent: 'Important', '': 'Announcement' }[a.type || ''] || 'Announcement';
+
+    return `
+    <div class="announce-item ${a.type || ''}" id="announce-${i}">
+      <div class="announce-header" onclick="toggleAnnounce(${i})" role="button" aria-expanded="false" aria-controls="announce-body-${i}" tabindex="0">
+        <div class="announce-header-left">
+          <span class="announce-tag announce-tag-${a.type || 'default'}">${typeLabel}</span>
+          <div class="meta">Posted ${a.date}</div>
+          <h3>${a.title}</h3>
+          <p class="announce-preview" id="announce-preview-${i}">${preview}</p>
+        </div>
+        <div class="announce-chevron" id="announce-chevron-${i}" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      ${isLong ? `
+      <div class="announce-body" id="announce-body-${i}" hidden>
+        <p>${a.body}</p>
+        ${a.link ? `<a class="btn btn-teal btn-sm" href="${a.link}" target="_blank" style="margin-top:8px;">${a.linkLabel || 'Learn More'} →</a>` : ''}
+      </div>` : ''}
+    </div>`;
+  }).join('');
+
+  // Also allow keyboard Enter/Space to toggle
+  document.querySelectorAll('.announce-header').forEach(el => {
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+    });
+  });
+}
+
+function toggleAnnounce(i) {
+  const body    = document.getElementById(`announce-body-${i}`);
+  const preview = document.getElementById(`announce-preview-${i}`);
+  const chevron = document.getElementById(`announce-chevron-${i}`);
+  const header  = document.querySelector(`#announce-${i} .announce-header`);
+  if (!body) return; // short posts with no expandable body
+
+  const isOpen = !body.hidden;
+  body.hidden    = isOpen;
+  preview.hidden = !isOpen;
+  chevron.classList.toggle('rotated', !isOpen);
+  header.setAttribute('aria-expanded', String(!isOpen));
 }
 
 /* ── RENDER: NEWSLETTER ─────────────────────────────────── */

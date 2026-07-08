@@ -277,6 +277,43 @@ nav { display: flex; align-items: center; gap: 2px; }
 .officer-bio   { font-size: .83rem; color: var(--muted); flex: 1; margin-bottom: 12px; }
 .officer-email a { font-size: .82rem; color: var(--teal); }
 
+/* ── PAST OFFICERS TOGGLE ───────────────────────────────── */
+.past-officers-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; background: none; border: none; cursor: pointer;
+  padding: 0 0 24px; text-align: left; gap: 16px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 0;
+  transition: opacity var(--transition);
+}
+.past-officers-toggle:hover { opacity: .8; }
+.past-officers-toggle-left { flex: 1; }
+.past-officers-toggle h2   { color: var(--navy); margin: 0; }
+.past-officers-toggle .announce-chevron { color: var(--navy); margin-top: 0; }
+
+/* Term selector tabs */
+.term-tabs {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 28px; padding-top: 4px;
+}
+.term-tab {
+  padding: 8px 20px; border-radius: 24px;
+  border: 2px solid var(--border); background: var(--white);
+  font-family: var(--ff-label); font-size: .82rem; font-weight: 700;
+  color: var(--muted); cursor: pointer;
+  transition: all var(--transition);
+}
+.term-tab:hover  { border-color: var(--teal); color: var(--teal); }
+.term-tab.active { background: var(--navy); border-color: var(--navy); color: var(--white); }
+
+/* Term panels */
+.term-panel         { display: none; animation: slideDown .2s ease; }
+.term-panel.active  { display: block; }
+
+/* Compact officer cards for past officers (no photo by default) */
+#past-term-panels .officer-photo-wrap { aspect-ratio: auto; min-height: 80px; }
+#past-term-panels .officer-bio        { display: none; } /* hide bio in past view to keep compact */
+
 /* ── MEMBERSHIP ─────────────────────────────────────────── */
 .benefit-item { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 22px; }
 .benefit-icon {
@@ -289,15 +326,60 @@ nav { display: flex; align-items: center; gap: 2px; }
 
 /* ── ANNOUNCEMENTS ──────────────────────────────────────── */
 .announce-item {
-  border-left: 4px solid var(--gold); padding: 20px 24px;
+  border-left: 4px solid var(--gold);
   background: var(--white); border-radius: 0 var(--radius) var(--radius) 0;
-  box-shadow: var(--shadow); margin-bottom: 18px;
+  box-shadow: var(--shadow); margin-bottom: 16px;
+  overflow: hidden;
+  transition: box-shadow var(--transition);
 }
+.announce-item:hover { box-shadow: var(--shadow-md); }
 .announce-item.info   { border-left-color: var(--teal); }
 .announce-item.urgent { border-left-color: #c0392b; }
-.announce-item h3  { color: var(--navy); margin-bottom: 4px; }
-.announce-item .meta { font-size: .78rem; color: var(--muted); margin-bottom: 8px; }
-.announce-item p   { font-size: .9rem; color: var(--muted); margin: 0; }
+
+/* Clickable header row */
+.announce-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; padding: 20px 24px;
+  cursor: pointer; user-select: none;
+  transition: background var(--transition);
+}
+.announce-header:hover { background: var(--warm); }
+.announce-header-left { flex: 1; }
+
+/* Tag pill */
+.announce-tag {
+  display: inline-block; margin-bottom: 8px;
+  padding: 2px 10px; border-radius: 20px; font-size: .7rem;
+  font-family: var(--ff-label); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em;
+}
+.announce-tag-default { background: #fdf2e0; color: #a0720f; }
+.announce-tag-info    { background: #e6f3f0; color: var(--teal); }
+.announce-tag-urgent  { background: #fdecea; color: #c0392b; }
+
+.announce-item .meta { font-size: .76rem; color: var(--muted); margin-bottom: 6px; }
+.announce-item h3    { color: var(--navy); margin-bottom: 6px; font-size: 1.05rem; }
+.announce-item .announce-preview { font-size: .9rem; color: var(--muted); margin: 0; }
+
+/* Chevron icon */
+.announce-chevron {
+  flex-shrink: 0; color: var(--muted); margin-top: 4px;
+  transition: transform .25s ease;
+}
+.announce-chevron.rotated { transform: rotate(180deg); }
+
+/* Expanded body */
+.announce-body {
+  padding: 0 24px 22px 24px;
+  border-top: 1px solid var(--border);
+  animation: slideDown .2s ease;
+}
+.announce-body p { font-size: .92rem; color: var(--muted); margin: 16px 0 0; }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 /* ── NEWSLETTER ─────────────────────────────────────────── */
 .newsletter-card {

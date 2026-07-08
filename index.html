@@ -127,8 +127,12 @@
     </div>
   </section>
 
+  <!-- Current officers -->
   <section class="section">
     <div class="container">
+      <p class="eyebrow">Current Term</p>
+      <h2>2025–2027 Officers</h2>
+      <div class="divider"></div>
       <div class="grid-3" id="officers-grid"></div>
 
       <div style="margin-top:48px;background:var(--sky);border-radius:var(--radius);padding:28px 32px;">
@@ -136,6 +140,38 @@
         <p style="color:var(--muted);margin:8px 0 18px;">For general inquiries, reach the full leadership team at the division list address.</p>
         <a class="btn btn-teal" href="mailto:MADRD@communities.aag.org">Email Division Leadership</a>
       </div>
+    </div>
+  </section>
+
+  <!-- Past officers — collapsible -->
+  <section class="section section--alt" id="past-officers-section">
+    <div class="container">
+
+      <!-- Toggle header -->
+      <button class="past-officers-toggle" id="past-officers-toggle"
+              onclick="togglePastOfficers()" aria-expanded="false" aria-controls="past-officers-body">
+        <div class="past-officers-toggle-left">
+          <p class="eyebrow" style="margin:0;">History</p>
+          <h2 style="margin:4px 0 0;">Past Officers</h2>
+        </div>
+        <div class="announce-chevron" id="past-officers-chevron" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </button>
+
+      <!-- Collapsible body -->
+      <div id="past-officers-body" hidden>
+        <p style="color:var(--muted);margin:0 0 28px;">Select a term to view the officers who served during that period.</p>
+
+        <!-- Term tab pills -->
+        <div class="term-tabs" id="past-term-tabs"></div>
+
+        <!-- Term panels -->
+        <div id="past-term-panels"></div>
+      </div>
+
     </div>
   </section>
 

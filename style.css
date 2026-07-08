@@ -356,6 +356,7 @@ nav { display: flex; align-items: center; gap: 2px; }
 .announce-tag-default { background: #fdf2e0; color: #a0720f; }
 .announce-tag-info    { background: #e6f3f0; color: var(--teal); }
 .announce-tag-urgent  { background: #fdecea; color: #c0392b; }
+.announce-tag-meeting { background: #e6f3f0; color: var(--teal); }
 
 .announce-item .meta { font-size: .76rem; color: var(--muted); margin-bottom: 6px; }
 .announce-item h3    { color: var(--navy); margin-bottom: 6px; font-size: 1.05rem; }

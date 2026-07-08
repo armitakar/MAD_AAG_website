@@ -375,9 +375,38 @@
     </div>
   </section>
 
+  <!-- Current announcements -->
   <section class="section">
     <div class="container">
+      <p class="eyebrow">Recent</p>
+      <h2>Current Announcements</h2>
+      <div class="divider"></div>
       <div style="max-width:760px;" id="announcements-list"></div>
+    </div>
+  </section>
+
+  <!-- Historical archive — collapsible -->
+  <section class="section section--alt">
+    <div class="container">
+      <button class="past-officers-toggle" id="archive-toggle"
+              onclick="toggleArchive()" aria-expanded="false" aria-controls="archive-body">
+        <div class="past-officers-toggle-left">
+          <p class="eyebrow" style="margin:0;">2010–2013</p>
+          <h2 style="margin:4px 0 0;">Historical Archive</h2>
+        </div>
+        <div class="announce-chevron" id="archive-chevron" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </button>
+
+      <div id="archive-body" hidden>
+        <p style="color:var(--muted);font-size:.9rem;margin:0 0 24px;">
+          Historical announcements preserved from the original MAD-AAG Google Site (2010–2013).
+        </p>
+        <div style="max-width:760px;" id="announcements-archive-list"></div>
+      </div>
     </div>
   </section>
 

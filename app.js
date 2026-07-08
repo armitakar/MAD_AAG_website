@@ -273,38 +273,19 @@ function renderMeetingDetail(year) {
 
 /* ── RENDER: ANNOUNCEMENTS ──────────────────────────────── */
 function renderAnnouncements() {
-  const items = window.SITE.announcements || [];
-  const PREVIEW_LENGTH = 130; // characters shown before "Read more"
+  const S = window.SITE;
 
-  document.getElementById('announcements-list').innerHTML = items.map((a, i) => {
-    const isLong    = a.body.length > PREVIEW_LENGTH;
-    const preview   = isLong ? a.body.slice(0, PREVIEW_LENGTH).trimEnd() + '…' : a.body;
-    const typeLabel = { info: 'Update', urgent: 'Important', '': 'Announcement' }[a.type || ''] || 'Announcement';
+  // Current announcements
+  document.getElementById('announcements-list').innerHTML =
+    buildAnnounceHTML(S.announcements || [], 'cur');
 
-    return `
-    <div class="announce-item ${a.type || ''}" id="announce-${i}">
-      <div class="announce-header" onclick="toggleAnnounce(${i})" role="button" aria-expanded="false" aria-controls="announce-body-${i}" tabindex="0">
-        <div class="announce-header-left">
-          <span class="announce-tag announce-tag-${a.type || 'default'}">${typeLabel}</span>
-          <div class="meta">Posted ${a.date}</div>
-          <h3>${a.title}</h3>
-          <p class="announce-preview" id="announce-preview-${i}">${preview}</p>
-        </div>
-        <div class="announce-chevron" id="announce-chevron-${i}" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </div>
-      ${isLong ? `
-      <div class="announce-body" id="announce-body-${i}" hidden>
-        <p>${a.body}</p>
-        ${a.link ? `<a class="btn btn-teal btn-sm" href="${a.link}" target="_blank" style="margin-top:8px;">${a.linkLabel || 'Learn More'} →</a>` : ''}
-      </div>` : ''}
-    </div>`;
-  }).join('');
+  // Historical archive
+  const archiveEl = document.getElementById('announcements-archive-list');
+  if (archiveEl) {
+    archiveEl.innerHTML = buildAnnounceHTML(S.archivedAnnouncements || [], 'arc');
+  }
 
-  // Also allow keyboard Enter/Space to toggle
+  // Keyboard accessibility for all announce headers
   document.querySelectorAll('.announce-header').forEach(el => {
     el.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
@@ -323,6 +304,63 @@ function toggleAnnounce(i) {
   body.hidden    = isOpen;
   preview.hidden = !isOpen;
   chevron.classList.toggle('rotated', !isOpen);
+  header.setAttribute('aria-expanded', String(!isOpen));
+}
+
+function toggleArchive() {
+  const body    = document.getElementById('archive-body');
+  const chevron = document.getElementById('archive-chevron');
+  const btn     = document.getElementById('archive-toggle');
+  const isOpen  = !body.hidden;
+  body.hidden   = isOpen;
+  chevron.classList.toggle('rotated', !isOpen);
+  btn.setAttribute('aria-expanded', String(!isOpen));
+}
+
+function buildAnnounceHTML(items, idPrefix) {
+  const PREVIEW_LENGTH = 130;
+  return items.map((a, i) => {
+    const isLong    = a.body.length > PREVIEW_LENGTH;
+    const preview   = isLong ? a.body.slice(0, PREVIEW_LENGTH).trimEnd() + '…' : a.body;
+    const typeLabel = { info: 'Update', urgent: 'Important', meeting: 'Meeting', '': 'Announcement' }[a.type || ''] || 'Announcement';
+    const tagType   = a.type === 'meeting' ? 'meeting' : (a.type || 'default');
+    const uid       = `${idPrefix}-${i}`;
+
+    return `
+    <div class="announce-item ${a.type || ''}" id="announce-${uid}">
+      <div class="announce-header" onclick="toggleAnnounceById('${uid}')" role="button" aria-expanded="false" aria-controls="announce-body-${uid}" tabindex="0">
+        <div class="announce-header-left">
+          <span class="announce-tag announce-tag-${tagType}">${typeLabel}</span>
+          <div class="meta">Posted ${a.date}</div>
+          <h3>${a.title}</h3>
+          <p class="announce-preview" id="announce-preview-${uid}">${preview.replace(/\n/g, '<br>')}</p>
+        </div>
+        ${isLong ? `<div class="announce-chevron" id="announce-chevron-${uid}" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>` : ''}
+      </div>
+      ${isLong ? `
+      <div class="announce-body" id="announce-body-${uid}" hidden>
+        <p>${a.body.replace(/\n/g, '<br>')}</p>
+        ${a.link ? `<a class="btn btn-teal btn-sm" href="${a.link}" target="_blank" style="margin-top:8px;">${a.linkLabel || 'Learn More'} →</a>` : ''}
+      </div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function toggleAnnounceById(uid) {
+  const body    = document.getElementById(`announce-body-${uid}`);
+  const preview = document.getElementById(`announce-preview-${uid}`);
+  const chevron = document.getElementById(`announce-chevron-${uid}`);
+  const header  = document.querySelector(`#announce-${uid} .announce-header`);
+  if (!body) return;
+
+  const isOpen = !body.hidden;
+  body.hidden    = isOpen;
+  preview.hidden = !isOpen;
+  if (chevron) chevron.classList.toggle('rotated', !isOpen);
   header.setAttribute('aria-expanded', String(!isOpen));
 }
 

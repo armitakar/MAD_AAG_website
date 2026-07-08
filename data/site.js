@@ -72,7 +72,7 @@ window.SITE = {
       name:        "Armita Kar",
       institution: "George Mason University",
       location:    "Fairfax, VA",
-      email:       "",
+      email:       "akar3@gmu.edu",
       photo:       "armita-kar.jpg",
       bio:         "Dr. Kar's work spans human mobility, spatial cognition, and environmental health."
     },
